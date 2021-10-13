@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "295689212643",
+    "project_id": "mobiroller-2967e",
+    "storage_bucket": "mobiroller-2967e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295689212643:android:f577fe3252737615732bd6",
+        "android_client_info": {
+          "package_name": "com.example.mobirollertask"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295689212643-5g3fsacc18043scptud2o89bqrktvtv1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mobirollertask",
+            "certificate_hash": "04b6a8d561b10ee7ac0bd86b4d90041018474387"
+          }
+        },
+        {
+          "client_id": "295689212643-3cc24g01jcbb11r3dv0laanebadf4ba6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlrvrYGDl8_BFa1kf8bdzRCb9XRfIMzUI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "295689212643-3cc24g01jcbb11r3dv0laanebadf4ba6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
