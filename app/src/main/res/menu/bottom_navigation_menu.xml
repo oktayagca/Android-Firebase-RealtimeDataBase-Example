@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item
+        android:id="@+id/listBottomItem"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_list_24"
+        android:title="@string/products"/>
+    <item
+        android:id="@+id/addBottomItem"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_add_24"
+        android:title="@string/product_add"/>
 </menu>

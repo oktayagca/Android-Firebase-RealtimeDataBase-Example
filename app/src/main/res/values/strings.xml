@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MobirollerTask</string>
+    <string name="products">Products</string>
+    <string name="product_add">Product Add</string>
 </resources>
