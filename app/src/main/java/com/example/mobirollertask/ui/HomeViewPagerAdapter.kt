@@ -3,6 +3,7 @@ package com.example.mobirollertask.ui
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.mobirollertask.ui.productAdd.ProductAddFragment
 
 
 private const val FRAGMENT_COUNT = 2

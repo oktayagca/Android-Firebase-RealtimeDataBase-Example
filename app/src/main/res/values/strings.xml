@@ -2,4 +2,12 @@
     <string name="app_name">MobirollerTask</string>
     <string name="products">Products</string>
     <string name="product_add">Product Add</string>
+    <string name="choose_photo">Choose Photo</string>
+    <string name="product_title">Product Title</string>
+    <string name="category">Category</string>
+    <string name="add_product">Add Product</string>
+    <string name="product_detail">Product Detail</string>
+    <string name="todo">TODO</string>
+    <string name="description">Description</string>
+    <string name="price">Price</string>
 </resources>
