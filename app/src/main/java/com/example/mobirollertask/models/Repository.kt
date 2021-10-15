@@ -8,4 +8,6 @@ class Repository @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ){
     suspend fun addProduct(product:Product) = remoteDataSource.addProduct(product)
+
+    suspend fun getProducts() = remoteDataSource.getProducts()
 }

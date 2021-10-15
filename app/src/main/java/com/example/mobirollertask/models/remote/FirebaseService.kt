@@ -1,10 +1,13 @@
 package com.example.mobirollertask.models.remote
 
+import android.util.Log
 import com.example.mobirollertask.models.entity.Product
 import com.example.mobirollertask.utils.Resource
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.delay
+import java.util.logging.Handler
 
 class FirebaseService {
     private lateinit var database: DatabaseReference
@@ -25,7 +28,7 @@ class FirebaseService {
         return message
     }
 
-    /*suspend fun getProducts() {
+    suspend fun getProducts():List<Product> {
         defineDB()
 
         val list: MutableList<Product> = mutableListOf()
@@ -33,9 +36,8 @@ class FirebaseService {
             .get().addOnSuccessListener {
                 Log.i("firebase", "Got value ${it.value}")
                 val children = it!!.children
-
-                children.forEach {
-                    val product = it.getValue(Product::class.java)
+                children.forEach {data->
+                    val product = data.getValue(Product::class.java)
                     if (product != null) {
                         println(product)
                         list.add(product)
@@ -44,6 +46,8 @@ class FirebaseService {
             }.addOnFailureListener {
                 Log.e("firebase", "Error getting data", it)
             }
+        delay(2000)
+        Log.v("firebase",list.toString())
+        return list
     }
-*/
 }

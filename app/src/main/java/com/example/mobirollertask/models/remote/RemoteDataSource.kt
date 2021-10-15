@@ -7,4 +7,6 @@ class RemoteDataSource @Inject constructor(
     private val firebaseService:FirebaseService
 ) {
     suspend fun addProduct(product: Product) = firebaseService.addProduct(product)
+
+    suspend fun getProducts() = firebaseService.getProducts()
 }

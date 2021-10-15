@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.mobirollertask.ui.HomeFragment"
+        android:name="com.example.mobirollertask.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -15,7 +15,11 @@
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment2"
-        android:name="com.example.mobirollertask.ui.ProductDetailFragment"
+        android:name="com.example.mobirollertask.ui.productDetail.ProductDetailFragment"
         android:label="fragment_product_detail"
-        tools:layout="@layout/fragment_product_detail" />
+        tools:layout="@layout/fragment_product_detail" >
+        <argument
+            android:name="productItem"
+            app:argType="com.example.mobirollertask.models.entity.Product" />
+    </fragment>
 </navigation>

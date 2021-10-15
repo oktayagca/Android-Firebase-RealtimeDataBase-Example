@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ProductDetailFragment">
+    tools:context=".ui.productDetail.ProductDetailFragment">
 
 
     <androidx.cardview.widget.CardView
@@ -58,7 +58,7 @@
         app:layout_constraintGuide_percent="0.45" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
@@ -70,19 +70,19 @@
         tools:text="Product Title" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textViewPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
         android:textColor="@color/orange"
         android:textSize="@dimen/_18ssp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
         tools:text="Product Price" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textViewDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
@@ -90,15 +90,16 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPrice"
         tools:text="Product Description" />
 
     <TextView
+        android:id="@+id/textViewDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDesc"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_6sdp"
         tools:text="Product Date" />

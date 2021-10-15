@@ -1,4 +1,4 @@
-package com.example.mobirollertask.ui
+package com.example.mobirollertask.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
