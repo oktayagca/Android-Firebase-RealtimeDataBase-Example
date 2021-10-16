@@ -10,4 +10,5 @@ class Repository @Inject constructor(
     suspend fun addProduct(product:Product) = remoteDataSource.addProduct(product)
 
     suspend fun getProducts() = remoteDataSource.getProducts()
+
 }

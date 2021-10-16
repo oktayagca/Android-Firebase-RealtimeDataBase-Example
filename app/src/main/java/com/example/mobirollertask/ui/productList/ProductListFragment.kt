@@ -34,7 +34,7 @@ class ProductListFragment :Fragment(),IOnClick{
 
     private fun getProductList() {
         viewModel.getProducts().observe(viewLifecycleOwner,{
-            setData(it)
+            setData(it!!)
             Log.v("firebase",it.toString())
         })
     }
