@@ -1,11 +1,15 @@
 package com.example.mobirollertask.ui.productAdd
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.net.ConnectivityManager
+import android.net.ConnectivityManager.*
+import android.net.NetworkCapabilities.*
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -20,6 +24,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.view.isEmpty
 import androidx.core.view.isNotEmpty
 import androidx.fragment.app.Fragment
@@ -27,6 +32,8 @@ import androidx.fragment.app.viewModels
 import com.example.mobirollertask.R
 import com.example.mobirollertask.databinding.FragmentProductAddBinding
 import com.example.mobirollertask.models.entity.Product
+import com.example.mobirollertask.models.entity.ProductForSaveState
+import com.example.mobirollertask.utils.hasInternetConnection
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.item_product_list.*
@@ -52,7 +59,38 @@ class ProductAddFragment : Fragment() {
         _binding = FragmentProductAddBinding.inflate(inflater, container, false)
         registerLauncher()
         initViews()
+        getSavedState()
         return binding.root
+    }
+
+    private fun getSavedState() {
+        viewModel.getState().observe(viewLifecycleOwner, {state->
+            selectedImageUri = state.imageUri?.toUri()
+            if(state.imageUri.isNullOrEmpty()){
+                binding.imageView.setImageResource(R.drawable.image)
+            }else{
+                binding.imageView.setImageURI(state.imageUri?.toUri())
+            }
+            binding.apply {
+                textFieldProductTitle.editText!!.setText(state.title)
+                textFieldProductCategory.editText!!.setText(state.category)
+                textFieldProductDescription.editText!!.setText(state.description)
+                textFieldProductPrice.editText!!.setText(state.price)
+
+            }
+        })
+    }
+    private fun saveState() {
+        binding.apply {
+            val product = ProductForSaveState(
+                imageUri = selectedImageUri.toString(),
+                title = textFieldProductTitle.editText!!.text.toString(),
+                category = textFieldProductCategory.editText!!.text.toString(),
+                description = textFieldProductDescription.editText!!.text.toString(),
+                price = textFieldProductPrice.editText!!.text.toString(),
+            )
+            viewModel.saveState(product)
+        }
     }
 
     private fun initViews() {
@@ -77,12 +115,22 @@ class ProductAddFragment : Fragment() {
                     uploadDate = currentDateTime.format(Date())
                 )
 
-                if (validate()) {
-                    viewModel.addProduct(product).observe(viewLifecycleOwner, {
-                        Toast.makeText(context, it, Toast.LENGTH_LONG).show()
-                        clearEditTexts()
-                        clearError()
-                    })
+                if (hasInternetConnection(requireActivity())) {
+                    if (validate()) {
+                        viewModel.addProduct(product).observe(viewLifecycleOwner, {
+                            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+                            clearEditTexts()
+                            clearError()
+                        })
+                    }
+                } else {
+                    val dialog = AlertDialog.Builder(context)
+                        .setTitle("Error")
+                        .setMessage("Please check network connection")
+                        .setPositiveButton("ok") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                    dialog.show()
                 }
             }
         }
@@ -101,17 +149,17 @@ class ProductAddFragment : Fragment() {
             }
             if (textFieldProductDescription.editText!!.text.isNullOrEmpty()) {
                 textFieldProductDescription.error = "Please enter description"
-            result = false
+                result = false
             }
             if (textFieldProductPrice.editText!!.text.isNullOrEmpty()) {
                 textFieldProductPrice.error = "Please enter price"
                 result = false
             }
-            if(selectedImageUri ==null){
+            if (selectedImageUri == null) {
                 Toast.makeText(context, "Please select image", Toast.LENGTH_LONG).show()
-                result =false
+                result = false
             }
-            Log.v("result",result.toString())
+            Log.v("result", result.toString())
         }
         return result
     }
@@ -125,7 +173,8 @@ class ProductAddFragment : Fragment() {
             textFieldProductPrice.editText!!.text.clear()
         }
     }
-    private fun clearError(){
+
+    private fun clearError() {
         binding.apply {
             textFieldProductTitle.error = null
             textFieldProductCategory.error = null
@@ -213,5 +262,10 @@ class ProductAddFragment : Fragment() {
                     Toast.makeText(context, "Permission Needed", Toast.LENGTH_LONG).show()
                 }
             }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        saveState()
     }
 }

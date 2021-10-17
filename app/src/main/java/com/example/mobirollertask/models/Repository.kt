@@ -10,4 +10,6 @@ class Repository @Inject constructor(
     suspend fun addProduct(product:Product) = remoteDataSource.addProduct(product)
 
     suspend fun getProducts() = remoteDataSource.getProducts()
+
+    suspend fun getProductsSorted(path:String) = remoteDataSource.getProductsSorted(path)
 }

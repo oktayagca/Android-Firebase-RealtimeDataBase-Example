@@ -18,4 +18,10 @@ class ProductListViewModel@Inject constructor(
             emit(repository.getProducts())
         }
     }
+
+    fun getProductsSorted(path:String): LiveData<List<Product>>{
+        return liveData(Dispatchers.IO) {
+            emit(repository.getProductsSorted(path))
+        }
+    }
 }

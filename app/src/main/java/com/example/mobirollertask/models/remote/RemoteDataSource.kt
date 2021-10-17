@@ -9,4 +9,6 @@ class RemoteDataSource @Inject constructor(
     suspend fun addProduct(product: Product) = firebaseService.addProduct(product)
 
     suspend fun getProducts() = firebaseService.getProducts()
+
+    suspend fun getProductsSorted(path:String) = firebaseService.getProductsSorted(path)
 }

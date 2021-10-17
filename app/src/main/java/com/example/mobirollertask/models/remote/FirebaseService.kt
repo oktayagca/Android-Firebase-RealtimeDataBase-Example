@@ -43,6 +43,20 @@ class FirebaseService {
         return list
     }
 
+    suspend fun getProductsSorted(path:String): List<Product> {
+        defineDB()
+        var list: List<Product> = mutableListOf()
+
+        try {
+            list = database.child("products").orderByChild(path).get().await().children.map { snapShot ->
+                snapShot.getValue(Product::class.java)!!
+            }
+        } catch (exception: Exception) {
+            Log.v("firebase", exception.toString())
+        }
+        return list
+    }
+
     suspend fun addProduct(product: Product): String {
         var savedProduct = product
         var imageUrl: Uri? = null
