@@ -1,7 +1,7 @@
-package com.example.mobirollertask.data
+package com.example.mobirollertask.models
 
-import com.example.mobirollertask.data.models.Product
-import com.example.mobirollertask.data.remote.RemoteDataSource
+import com.example.mobirollertask.models.entity.Product
+import com.example.mobirollertask.models.remote.RemoteDataSource
 import javax.inject.Inject
 
 class Repository @Inject constructor(

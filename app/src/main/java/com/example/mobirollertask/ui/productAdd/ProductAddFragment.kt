@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -34,7 +35,8 @@ class ProductAddFragment:Fragment() {
     private val binding get() = _binding!!
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
-    var selectedBitmap : Bitmap? = null
+    private var selectedBitmap : Bitmap? = null
+    var selectedImageUri : Uri? = null
     private val viewModel: ProductAddViewModel by viewModels()
 
     override fun onCreateView(
@@ -56,6 +58,7 @@ class ProductAddFragment:Fragment() {
             saveButton.setOnClickListener{
                 val currentDateTime = SimpleDateFormat("dd/M/yyyy")
                 val product = Product(
+                    imageUri = selectedImageUri.toString(),
                     title = textFieldProductTitle.editText!!.text.toString(),
                     category = textFieldProductCategory.editText!!.text.toString(),
                     description = textFieldProductDescription.editText!!.text.toString(),
@@ -74,6 +77,7 @@ class ProductAddFragment:Fragment() {
 
     private fun clearEditTexts() {
         binding.apply {
+            imageView.setImageURI(null)
             textFieldProductTitle.editText!!.text.clear()
             textFieldProductCategory.editText!!.text.clear()
             textFieldProductDescription.editText!!.text.clear()
@@ -111,6 +115,7 @@ class ProductAddFragment:Fragment() {
                 val intentFromResult = result.data
                 if(intentFromResult != null){
                     val imageData = intentFromResult.data
+                    selectedImageUri = imageData
                     //imageView.setImageURI(imageData)
                     if(imageData != null){
                         try {

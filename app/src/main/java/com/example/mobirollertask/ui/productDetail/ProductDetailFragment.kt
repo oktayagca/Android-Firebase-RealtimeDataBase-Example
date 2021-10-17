@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.example.mobirollertask.databinding.FragmentProductDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,6 +30,8 @@ class ProductDetailFragment:Fragment() {
     private fun initViews() {
         viewModel.getProduct().observe(viewLifecycleOwner,{
             binding.apply {
+                Glide.with(imageView.context)
+                    .load(it.imageUri).into(imageView)
                 textViewTitle.text = it.title
                 textViewPrice.text = it.price
                 textViewDate.text = it.uploadDate

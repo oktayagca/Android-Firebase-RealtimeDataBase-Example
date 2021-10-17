@@ -34,8 +34,14 @@ class ProductListFragment :Fragment(),IOnClick{
 
     private fun getProductList() {
         viewModel.getProducts().observe(viewLifecycleOwner,{
-            setData(it!!)
-            Log.v("firebase",it.toString())
+            if(it.isNullOrEmpty()){
+                binding.noDataImageView.visibility = View.VISIBLE
+            }else{
+                setData(it!!)
+                Log.v("firebase",it.toString())
+                binding.noDataImageView.visibility = View.GONE
+            }
+
         })
     }
 

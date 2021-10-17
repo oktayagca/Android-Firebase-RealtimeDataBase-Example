@@ -3,6 +3,7 @@ package com.example.mobirollertask.ui.productList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.mobirollertask.databinding.ItemProductListBinding
 import com.example.mobirollertask.models.entity.Product
 
@@ -18,6 +19,8 @@ class ProductRecyclerViewAdapter:RecyclerView.Adapter<ProductRecyclerViewAdapter
                 textViewCategory.text = item.category
                 textViewTitle.text = item.title
                 textViewPrice.text = item.price
+                Glide.with(imageView.context)
+                    .load(item.imageUri).into(imageView)
                 layout.setOnClickListener{
                     onClickListener.onClick(item)
                 }

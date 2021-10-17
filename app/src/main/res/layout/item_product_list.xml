@@ -10,6 +10,7 @@
 
     <ImageView
         android:id="@+id/imageView"
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_100sdp"
         android:src="@drawable/ic_team_goals_pana"
