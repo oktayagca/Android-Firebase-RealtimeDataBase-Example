@@ -1,7 +1,7 @@
-package com.example.mobirollertask.models
+package com.example.mobirollertask.data
 
-import com.example.mobirollertask.models.entity.Product
-import com.example.mobirollertask.models.remote.RemoteDataSource
+import com.example.mobirollertask.data.models.Product
+import com.example.mobirollertask.data.remote.RemoteDataSource
 import javax.inject.Inject
 
 class Repository @Inject constructor(
@@ -10,5 +10,4 @@ class Repository @Inject constructor(
     suspend fun addProduct(product:Product) = remoteDataSource.addProduct(product)
 
     suspend fun getProducts() = remoteDataSource.getProducts()
-
 }

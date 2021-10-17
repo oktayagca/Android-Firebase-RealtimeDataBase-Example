@@ -1,10 +1,10 @@
-package com.example.mobirollertask.models.remote
+package com.example.mobirollertask.data.remote
 
-import com.example.mobirollertask.models.entity.Product
+import com.example.mobirollertask.data.models.Product
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
-    private val firebaseService:FirebaseService
+    private val firebaseService:FirebaseService,
 ) {
     suspend fun addProduct(product: Product) = firebaseService.addProduct(product)
 
