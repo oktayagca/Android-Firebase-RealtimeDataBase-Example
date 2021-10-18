@@ -66,11 +66,6 @@ class ProductAddFragment : Fragment() {
     private fun getSavedState() {
         viewModel.getState().observe(viewLifecycleOwner, {state->
             selectedImageUri = state.imageUri?.toUri()
-            if(state.imageUri.isNullOrEmpty()){
-                binding.imageView.setImageResource(R.drawable.image)
-            }else{
-                binding.imageView.setImageURI(state.imageUri?.toUri())
-            }
             binding.apply {
                 textFieldProductTitle.editText!!.setText(state.title)
                 textFieldProductCategory.editText!!.setText(state.category)
@@ -166,7 +161,6 @@ class ProductAddFragment : Fragment() {
 
     private fun clearEditTexts() {
         binding.apply {
-            imageView.setImageResource(R.drawable.image)
             textFieldProductTitle.editText!!.text.clear()
             textFieldProductCategory.editText!!.text.clear()
             textFieldProductDescription.editText!!.text.clear()
