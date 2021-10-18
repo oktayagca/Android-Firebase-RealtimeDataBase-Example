@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.example.mobirollertask.R
 import com.example.mobirollertask.databinding.FragmentProductDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,11 +34,12 @@ class ProductDetailFragment:Fragment() {
 
     private fun initViews() {
         viewModel.getProduct().observe(viewLifecycleOwner,{
+            val price: String = binding.root.context.getString(R.string.currency,it.price)
             binding.apply {
                 Glide.with(imageView.context)
                     .load(it.imageUri).into(imageView)
                 textViewTitle.text = it.title
-                textViewPrice.text = it.price
+                textViewPrice.text = price
                 textViewDate.text = it.uploadDate
                 textViewDesc.text = it.description
             }

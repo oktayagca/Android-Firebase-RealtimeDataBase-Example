@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.mobirollertask.R
 import com.example.mobirollertask.databinding.ItemProductListBinding
 import com.example.mobirollertask.models.entity.Product
 
@@ -15,10 +16,11 @@ class ProductRecyclerViewAdapter:RecyclerView.Adapter<ProductRecyclerViewAdapter
 
     class ProductViewHolder(private val binding: ItemProductListBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(item:Product,onClickListener: IOnClick){
+            val price: String = binding.root.context.getString(R.string.currency,item.price)
             binding.apply {
                 textViewCategory.text = item.category
                 textViewTitle.text = item.title
-                textViewPrice.text = item.price
+                textViewPrice.text = price
                 Glide.with(imageView.context)
                     .load(item.imageUri).into(imageView)
                 layout.setOnClickListener{

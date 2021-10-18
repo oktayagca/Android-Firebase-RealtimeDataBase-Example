@@ -138,6 +138,8 @@ class ProductAddFragment : Fragment() {
 
     private fun clearEditTexts() {
         binding.apply {
+            selectedImageUri = null
+            imageView.setImageResource(android.R.color.transparent)
             textFieldProductTitle.editText!!.text.clear()
             textFieldProductCategory.editText!!.text.clear()
             textFieldProductDescription.editText!!.text.clear()
@@ -159,6 +161,7 @@ class ProductAddFragment : Fragment() {
         viewModel.getState().observe(viewLifecycleOwner, {state->
             selectedImageUri = state.imageUri?.toUri()
             binding.apply {
+                imageView.setImageURI(selectedImageUri)
                 textFieldProductTitle.editText!!.setText(state.title)
                 textFieldProductCategory.editText!!.setText(state.category)
                 textFieldProductDescription.editText!!.setText(state.description)

@@ -12,6 +12,7 @@
     <string name="price">Price</string>
     <string name="sort_products">Sort products</string>
     <string name="please_select_image">Please Select Image</string>
+    <string name="currency">%1$sTL</string>
 
     <string-array name="sortingOptions">
         <item>Sort by date</item>

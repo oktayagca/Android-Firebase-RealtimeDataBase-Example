@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:windowSoftInputMode="adjustResize"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:context=".ui.productAdd.ProductAddFragment">
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.productDetail.ProductDetailFragment">
-
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
@@ -35,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.08" />
+        app:layout_constraintGuide_begin="@dimen/_45sdp" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -56,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.45" />
+        app:layout_constraintGuide_begin="@dimen/_255sdp" />
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -83,12 +87,13 @@
 
     <TextView
         android:id="@+id/textViewDesc"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_6sdp"
         android:textColor="@color/black"
         android:textSize="@dimen/_14ssp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewPrice"
         tools:text="Product Description" />
@@ -104,4 +109,7 @@
         android:layout_marginTop="@dimen/_6sdp"
         tools:text="Product Date" />
 
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
