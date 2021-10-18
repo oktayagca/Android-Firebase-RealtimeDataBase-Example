@@ -108,33 +108,6 @@ class ProductAddFragment : Fragment() {
         }
     }
 
-    private fun getSavedState() {
-        viewModel.getState().observe(viewLifecycleOwner, {state->
-            selectedImageUri = state.imageUri?.toUri()
-            binding.apply {
-                textFieldProductTitle.editText!!.setText(state.title)
-                textFieldProductCategory.editText!!.setText(state.category)
-                textFieldProductDescription.editText!!.setText(state.description)
-                textFieldProductPrice.editText!!.setText(state.price)
-
-            }
-        })
-    }
-    private fun saveState() {
-        binding.apply {
-            val product = ProductForSaveState(
-                imageUri = selectedImageUri.toString(),
-                title = textFieldProductTitle.editText!!.text.toString(),
-                category = textFieldProductCategory.editText!!.text.toString(),
-                description = textFieldProductDescription.editText!!.text.toString(),
-                price = textFieldProductPrice.editText!!.text.toString(),
-            )
-            viewModel.saveState(product)
-        }
-    }
-
-
-
     private fun validate(): Boolean {
         var result = true
         binding.apply {
@@ -181,6 +154,31 @@ class ProductAddFragment : Fragment() {
         }
     }
 
+
+    private fun getSavedState() {
+        viewModel.getState().observe(viewLifecycleOwner, {state->
+            selectedImageUri = state.imageUri?.toUri()
+            binding.apply {
+                textFieldProductTitle.editText!!.setText(state.title)
+                textFieldProductCategory.editText!!.setText(state.category)
+                textFieldProductDescription.editText!!.setText(state.description)
+                textFieldProductPrice.editText!!.setText(state.price)
+
+            }
+        })
+    }
+    private fun saveState() {
+        binding.apply {
+            val product = ProductForSaveState(
+                imageUri = selectedImageUri.toString(),
+                title = textFieldProductTitle.editText!!.text.toString(),
+                category = textFieldProductCategory.editText!!.text.toString(),
+                description = textFieldProductDescription.editText!!.text.toString(),
+                price = textFieldProductPrice.editText!!.text.toString(),
+            )
+            viewModel.saveState(product)
+        }
+    }
 
     private fun checkSelfPermission(
         context: Context,

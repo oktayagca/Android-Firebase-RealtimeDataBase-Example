@@ -47,6 +47,22 @@ class ProductListFragment :Fragment(),IOnClick{
         _binding = null
     }
 
+    private fun initViews() {
+        val options = resources.getStringArray(R.array.sortingOptions)
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, options)
+        binding.apply {
+            autoCompleteTextView.setAdapter(arrayAdapter)
+            autoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
+                when(position){
+                    0->getProductsSorted("uploadDate")
+                    1->getProductsSorted("price")
+                }
+            }
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = GridLayoutManager(context,2)
+        }
+    }
+
     private fun getProductList() {
         if(hasInternetConnection(requireActivity())){
         viewModel.getProducts().observe(viewLifecycleOwner,{
@@ -95,27 +111,9 @@ class ProductListFragment :Fragment(),IOnClick{
         }
     }
 
-
     private fun setData(restaurantList: List<Product>) {
         adapter.setProductList(restaurantList,this)
     }
-
-    private fun initViews() {
-        val options = resources.getStringArray(R.array.sortingOptions)
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, options)
-        binding.apply {
-            autoCompleteTextView.setAdapter(arrayAdapter)
-            autoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
-                when(position){
-                    0->getProductsSorted("uploadDate")
-                    1->getProductsSorted("price")
-                }
-            }
-            recyclerView.adapter = adapter
-            recyclerView.layoutManager = GridLayoutManager(context,2)
-        }
-    }
-
 
     override fun onClick(product: Product) {
         val action = HomeFragmentDirections.actionHomeFragmentToProductDetailFragment2(product)
