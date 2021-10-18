@@ -7,9 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
-import android.net.ConnectivityManager
-import android.net.ConnectivityManager.*
-import android.net.NetworkCapabilities.*
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -25,18 +22,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import androidx.core.view.isEmpty
-import androidx.core.view.isNotEmpty
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.mobirollertask.R
 import com.example.mobirollertask.databinding.FragmentProductAddBinding
 import com.example.mobirollertask.models.entity.Product
 import com.example.mobirollertask.models.entity.ProductForSaveState
 import com.example.mobirollertask.utils.hasInternetConnection
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.item_product_list.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,7 +41,7 @@ class ProductAddFragment : Fragment() {
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
     private var selectedBitmap: Bitmap? = null
-    var selectedImageUri: Uri? = null
+    private var selectedImageUri: Uri? = null
     private val viewModel: ProductAddViewModel by viewModels()
 
     override fun onCreateView(
@@ -61,6 +54,58 @@ class ProductAddFragment : Fragment() {
         initViews()
         getSavedState()
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        saveState()
+        _binding = null
+    }
+
+    private fun initViews() {
+        binding.apply {
+            selectImageButton.setOnClickListener {
+                checkSelfPermission(
+                    requireContext(),
+                    requireActivity(),
+                    binding.root,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                    "Gallery"
+                )
+            }
+            saveButton.setOnClickListener {
+                val currentDateTime = SimpleDateFormat("dd/M/yyyy")
+                val product = Product(
+                    imageUri = selectedImageUri.toString(),
+                    title = textFieldProductTitle.editText!!.text.toString(),
+                    category = textFieldProductCategory.editText!!.text.toString(),
+                    description = textFieldProductDescription.editText!!.text.toString(),
+                    price = textFieldProductPrice.editText!!.text.toString(),
+                    uploadDate = currentDateTime.format(Date())
+                )
+                saveProduct(product)
+            }
+        }
+    }
+
+    private fun saveProduct(product: Product) {
+        if (hasInternetConnection(requireActivity())) {
+            if (validate()) {
+                viewModel.addProduct(product).observe(viewLifecycleOwner, {
+                    Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+                    clearEditTexts()
+                    clearError()
+                })
+            }
+        } else {
+            val dialog = AlertDialog.Builder(context)
+                .setTitle("Error")
+                .setMessage("Please check network connection")
+                .setPositiveButton("ok") { dialog, _ ->
+                    dialog.dismiss()
+                }
+            dialog.show()
+        }
     }
 
     private fun getSavedState() {
@@ -88,48 +133,7 @@ class ProductAddFragment : Fragment() {
         }
     }
 
-    private fun initViews() {
-        binding.apply {
-            selectImageButton.setOnClickListener {
-                checkSelfPermission(
-                    requireContext(),
-                    requireActivity(),
-                    binding.root,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                    "Gallery"
-                )
-            }
-            saveButton.setOnClickListener {
-                val currentDateTime = SimpleDateFormat("dd/M/yyyy")
-                val product = Product(
-                    imageUri = selectedImageUri.toString(),
-                    title = textFieldProductTitle.editText!!.text.toString(),
-                    category = textFieldProductCategory.editText!!.text.toString(),
-                    description = textFieldProductDescription.editText!!.text.toString(),
-                    price = textFieldProductPrice.editText!!.text.toString(),
-                    uploadDate = currentDateTime.format(Date())
-                )
 
-                if (hasInternetConnection(requireActivity())) {
-                    if (validate()) {
-                        viewModel.addProduct(product).observe(viewLifecycleOwner, {
-                            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
-                            clearEditTexts()
-                            clearError()
-                        })
-                    }
-                } else {
-                    val dialog = AlertDialog.Builder(context)
-                        .setTitle("Error")
-                        .setMessage("Please check network connection")
-                        .setPositiveButton("ok") { dialog, _ ->
-                            dialog.dismiss()
-                        }
-                    dialog.show()
-                }
-            }
-        }
-    }
 
     private fun validate(): Boolean {
         var result = true
@@ -178,7 +182,7 @@ class ProductAddFragment : Fragment() {
     }
 
 
-    fun checkSelfPermission(
+    private fun checkSelfPermission(
         context: Context,
         activity: Activity,
         view: View,
@@ -228,13 +232,13 @@ class ProductAddFragment : Fragment() {
                                         imageData
                                     )
                                     selectedBitmap = ImageDecoder.decodeBitmap(source)
-                                    binding!!.imageView.setImageBitmap(selectedBitmap)
+                                    binding.imageView.setImageBitmap(selectedBitmap)
                                 } else {
                                     selectedBitmap = MediaStore.Images.Media.getBitmap(
                                         requireActivity().contentResolver,
                                         imageData
                                     )
-                                    binding!!.imageView.setImageBitmap(selectedBitmap)
+                                    binding.imageView.setImageBitmap(selectedBitmap)
                                 }
                             } catch (e: Exception) {
                                 e.printStackTrace()
@@ -258,8 +262,4 @@ class ProductAddFragment : Fragment() {
             }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        saveState()
-    }
 }

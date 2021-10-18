@@ -36,13 +36,24 @@ class ProductListFragment :Fragment(),IOnClick{
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        getProductList()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.recyclerView.adapter = null
+        _binding = null
+    }
+
     private fun getProductList() {
         if(hasInternetConnection(requireActivity())){
         viewModel.getProducts().observe(viewLifecycleOwner,{
             if(it.isNullOrEmpty()){
                 binding.noDataImageView.visibility = View.VISIBLE
             }else{
-                setData(it!!)
+                setData(it)
                 Log.v("firebase",it.toString())
                 binding.noDataImageView.visibility = View.GONE
             }
@@ -66,7 +77,7 @@ class ProductListFragment :Fragment(),IOnClick{
                 if(it.isNullOrEmpty()){
                     binding.noDataImageView.visibility = View.VISIBLE
                 }else{
-                    setData(it!!)
+                    setData(it)
                     Log.v("firebase",it.toString())
                     binding.noDataImageView.visibility = View.GONE
                 }
@@ -105,16 +116,6 @@ class ProductListFragment :Fragment(),IOnClick{
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        getProductList()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding.recyclerView.adapter = null
-        _binding = null
-    }
 
     override fun onClick(product: Product) {
         val action = HomeFragmentDirections.actionHomeFragmentToProductDetailFragment2(product)

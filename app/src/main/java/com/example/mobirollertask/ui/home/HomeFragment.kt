@@ -21,12 +21,18 @@ class HomeFragment: Fragment() {
         initViews()
         return binding.root
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.viewPager.adapter = null
+        _binding = null
+    }
 
     private fun initViews() {
         val adapter = HomeViewPagerAdapter(requireActivity())
         binding.apply {
             viewPager.adapter = adapter
             viewPager.isUserInputEnabled = false
+            viewPager.isSaveEnabled =false
             bottomNavigation.setOnItemSelectedListener{item->
                 when (item.title) {
                     "Products" -> viewPager.currentItem = 0

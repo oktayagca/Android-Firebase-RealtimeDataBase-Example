@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.mobirollertask.databinding.FragmentProductDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 @AndroidEntryPoint
 class ProductDetailFragment:Fragment() {
@@ -27,6 +26,11 @@ class ProductDetailFragment:Fragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun initViews() {
         viewModel.getProduct().observe(viewLifecycleOwner,{
             binding.apply {
@@ -39,4 +43,5 @@ class ProductDetailFragment:Fragment() {
             }
         })
     }
+
 }
