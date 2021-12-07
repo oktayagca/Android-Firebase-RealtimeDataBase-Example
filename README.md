@@ -1,4 +1,3 @@
-# Mobiroller Task
 This is an basic e-commerce application.
 
 ## Technologies and Libraries 
